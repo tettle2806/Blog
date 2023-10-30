@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Статья: {{ article.title }}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    {% if article.photo %}
+    <img src="{{ article.photo.url }}" class="card-img-top" alt="...">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <p class="card-text">{{ article.short_description }}</p>
+        <p2 class="card-text">{{ article.full_description }}</p2>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Автор: <b>{{ article.author }}</b>
+        </li>
+        <li class="list-group-item">
+            Категория: <b>{{ article.category }}</b>
+        </li>
+        <li class="list-group-item">
+            Кол-во просмотров: <b>{{ article.views }}</b>
+        </li>
+        <li class="list-group-item">
+            Дата создания: <b>{{ article.created_at }}</b>
+        </li>
+    </ul>
+    <div class="card-body d-flex justify-content-between align-items-center">
+        {% if request.user == article.author %}
+        <div class="d-flex gap-2">
+            <a href="{% url 'delete' article.pk %}" class="btn btn-danger">Удалить</a>
+            <a href="#" class="btn btn-warning">Изменить</a>
+        </div>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <div class="d-flex gap-2">
+            <a href="#" class="btn btn-danger">Дизлайк</a>
+            <a href="#" class="btn btn-success">Лайк</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

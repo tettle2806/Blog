@@ -1,0 +1,10 @@
+{% load custom_tags %}
+
+{% get_categories as categories %}
+
+<div class="list-group">
+  <a href="{% url 'home' %}" class="list-group-item list-group-item-action">Все</a>
+  {% for category in categories %}
+  <a href="{% url 'category_articles' category_id=category.pk %}" class="list-group-item list-group-item-action">{{ category }}</a>
+  {% endfor %}
+</div>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Главная страница
+{% endblock title %}
+
+{% block content %}
+
+
+<div class="row row-gap-4">
+    {% for article in articles %}
+    <div class="col-4">
+        <div class="card">
+            {% if article.photo %}
+            <img src="{{ article.photo.url }}" class="card-img-top" alt="..." style="height: 250px;">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <p class="card-text">{{ article.short_description }}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    Автор: <b>{{ article.author }}</b>
+                </li>
+                <li class="list-group-item">
+                    Категория: <b>{{ article.category }}</b>
+                </li>
+                <li class="list-group-item">
+                    Кол-во просмотров: <b>{{ article.views }}</b>
+                </li>
+                <li class="list-group-item">
+                    Дата создания: <b>{{ article.created_at }}</b>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a href="{% url 'article_detail' article.pk %}" class="card-link">Подробнее</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% include './include/_pagination.html' %}
+</div>
+{% endblock content %}
